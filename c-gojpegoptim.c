@@ -135,9 +135,6 @@ int optimizeJPEG(unsigned char *inputbuffer, unsigned long inputsize, unsigned c
 
   jpeg_mem_dest(&cinfo, outputbuffer, outputsize);
 
-  printf("Proc: Image is %d by %d with %d components target quality:%d\n", 
-      dinfo.output_width, dinfo.output_height,  dinfo.output_components, quality);
-
   if (quality>-1 ) {
      jpeg_start_decompress(&dinfo);
 
@@ -162,7 +159,6 @@ int optimizeJPEG(unsigned char *inputbuffer, unsigned long inputsize, unsigned c
   if (setjmp(jcerr.setjmp_buffer)) {
       jpeg_abort_compress(&cinfo);
       jpeg_abort_decompress(&dinfo);
-      printf(" [Compress ERROR]\n");
       if (buf) {
         for (j=0;j<dinfo.output_height;j++) free(buf[j]);
         free(buf); buf=NULL;
